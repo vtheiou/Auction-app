@@ -5,7 +5,7 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 class App extends Component {
-  state = {contractBalance:0,userBalances:0,highestBidder:null,highestBid: 0, web3: null, accounts: null, contract: null,current_bid:"" };
+  state = {contractBalance:0, highestBidder:null,highestBid: 0, web3: null, accounts: null, contract: null,current_bid:"" };
 
   componentDidMount = async () => {
     try {
@@ -40,25 +40,25 @@ class App extends Component {
   bid_1 = async () => {
     const { accounts, contract,current_bid} = this.state;
     const bid_value = this.state.current_bid;
-    const withdraw1 = await contract.methods.bid().send({ from: accounts[0],value:bid_value});
+    await contract.methods.bid().send({ from: accounts[0],value:bid_value});
 
     const highest_bid = await contract.methods.getHighestBid().call(); 
     const highest_bid_addr = await contract.methods.getHighestBidderAddress().call(); 
 
-    this.setState({ highestBid: highest_bid ,highestBidder:highest_bid_addr,userBalances:withdraw1});
+    this.setState({ highestBid: highest_bid ,highestBidder:highest_bid_addr});
       
   };
   bid_2 = async () => {
     const { accounts, contract,current_bid} = this.state;
     const bid_value = this.state.current_bid;
-    const withdraw1 = await contract.methods.bid().send({ from: accounts[0],value:value});
+    await contract.methods.bid().send({ from: accounts[0],value:value});
     
     const highest_bid = await contract.methods.getHighestBid().call();
 
     
     const highest_bid_addr = await contract.methods.getHighestBidderAddress().call();
     
-    this.setState({ highestBid: highest_bid ,highestBidder:highest_bid_addr,userBalances:withdraw1});
+    this.setState({ highestBid: highest_bid ,highestBidder:highest_bid_addr});
       
   };
   highestBid = async ()=>{
@@ -78,11 +78,11 @@ class App extends Component {
      const contractBalance = await contract.methods.getContractBalance().call({from: accounts[0]});
 
 
-     const withdraw1 = await contract.methods.withdraw().send({from:accounts[0]});
+     await contract.methods.withdraw().send({from:accounts[0]});
      
       
      console.log(this.state);
-     this.setState({getContractBalance:contractBalance,userBalances:withdraw1});
+     this.setState({getContractBalance:contractBalance});
   }
 
   getContractBalance = async () =>{
